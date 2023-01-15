@@ -15,7 +15,6 @@
    }
 
 
-
    public function getcurrentuser(){
    	   return $_SESSION['user'];
    }

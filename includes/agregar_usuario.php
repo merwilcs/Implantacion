@@ -1,7 +1,11 @@
 <?php
 
 
-$conexion=new mysqli('localhost','root','','implantacion');
+//$conexion=new mysqli('localhost','root','','implantacion');
+include("../includes/db.php");
+
+$connect=new db();
+$conexion=$connect->conexion();
 
 $primer_nombre=$_POST['p_nombre'];
 $segundo_nombre=$_POST['s_nombre'];
@@ -44,9 +48,9 @@ $resultado->execute();
 if ($resultado==true) {
    
 
- echo " exitoso1";
+ 
 
-  // header('location:../index.php');
+  header('location:../vistas/agregar_usuario.php');
 }else{
     echo "no exitoso";
 }
