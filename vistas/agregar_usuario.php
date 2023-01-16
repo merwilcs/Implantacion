@@ -1,4 +1,19 @@
-<?php $mysqli=new mysqli('localhost','root','','implantacion'); ?>
+<?php 
+
+//$mysqli=new mysqli('localhost','root','','implantacion'); 
+include("../includes/db.php");
+
+$connect=new db();
+$mysqli=$connect->conexion();
+session_start();
+
+ if (!isset($_SESSION['administrador'])) {
+  //echo "hay sesion";
+  //$user->setuser($user->$usersession->getcurrentuser());
+  header("location:../vistas/login_modo_privilegiado.php");
+}
+?>
+
 <html><head>
     <meta charset="UTF-8">
     <title>Agregar usuario</title>
@@ -10,14 +25,14 @@
     <!-- Theme style -->
     <link href="../plugins/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css">
     <link href="../plugins/dist/css/skins/skin-blue-light.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap.css">
 
     
-          <script src="plugins/jquery/jquery-2.1.4.min.js"></script>
-<script src="plugins/morris/raphael-min.js"></script>
-<script src="plugins/morris/morris.js"></script>
-  <link rel="stylesheet" href="plugins/morris/morris.css">
-  <link rel="stylesheet" href="plugins/morris/example.css">
+          <script src="../plugins/jquery/jquery-2.1.4.min.js"></script>
+<script src="../plugins/morris/raphael-min.js"></script>
+<script src="../plugins/morris/morris.js"></script>
+  <link rel="stylesheet" href="../plugins/morris/morris.css">
+  <link rel="stylesheet" href="../plugins/morris/example.css">
           <script src="plugins/jspdf/jspdf.min.js"></script>
           <script src="plugins/jspdf/jspdf.plugin.autotable.js"></script>
           <script language="javascript" src="jquery-3.1.1.min.js"></script>
@@ -137,11 +152,11 @@
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
             <li class="header">ADMINISTRACION</li>
-                                    <li><a href="./index.php?view=home"><i class="fa fa-home"></i> <span>Inicio</span></a></li>
+                                    <li><a href="../vistas/home_admin.php"><i class="fa fa-home"></i> <span>Inicio</span></a></li>
             
-            <li><a href="./?view=sells"><i class="fa fa-shopping-cart"></i> <span>Ventas</span></a></li>
+            <li><a href="ver_ventas.php"><i class="fa fa-shopping-cart"></i> <span> Ventas</span></a></li>
             
-            <li><a href="./?view=products"><i class="fa fa-glass"></i> <span>Productos</span></a></li>
+            <li><a href="ver_productos.php"><i class="fa fa-glass"></i> <span>Productos</span></a></li>
 
             <li class="treeview">
               <a href="#"><i class="fa fa-database"></i> <span>Catalogos</span> </a>
@@ -160,17 +175,17 @@
                 <li><a href="./?view=res">Abastecimientos</a></li>
               </ul>
             </li>
-                        <li class="treeview">
+                        <!--<li class="treeview">
               <a href="#"><i class="fa fa-file-text-o"></i> <span>Reportes</span></a>
               <ul class="treeview-menu">
                 <li><a href="./?view=reports">Inventario</a></li>
                 <li><a href="./?view=sellreports">Ventas</a></li>
               </ul>
-            </li>
+            </li>-->
 
 
             <li class="treeview">
-              <a href="#"><i class="fa fa-cog"></i> <span>Administracion</span></a>
+              <a href="../includes/cerrar_sesion.php"><i class="fa fa-cog"></i> <span> Cerrar sesion</span></a>
               <ul class="treeview-menu">
                 <li><a href="./?view=users">Usuarios</a></li>
                 <li><a href="./?view=settings">Configuracion</a></li>
@@ -406,7 +421,8 @@
   
   
   
-  
+  <br>
+  <br>
   
 
   
