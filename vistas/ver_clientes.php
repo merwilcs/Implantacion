@@ -1,39 +1,38 @@
 <?php
-//$conexion=new mysqli('localhost','root','','implantacion');
-include("../includes/db.php");
+
+ include("../includes/db.php");
 
 $connect=new db();
 $conexion=$connect->conexion();
 session_start();
-if (!isset($_SESSION['administrador'])) {
-  header('location:login_modo_privilegiado.php');
+
+ if (!isset($_SESSION['administrador'])) {
+  //echo "hay sesion";
+  //$user->setuser($user->$usersession->getcurrentuser());
+  header("location:../vistas/login_modo_privilegiado.php");
 }
-
-
-
-?>
-
+ ?>
 
 
 <html><head>
     <meta charset="UTF-8">
-    <title> Home</title>
+    <title>Clientes</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     
     <link href="../bootstrap.min.css" rel="stylesheet" type="text/css">
    
-    <link href="../plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+   <link href="../plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     
     <link href="../plugins/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css">
     <link href="../plugins/dist/css/skins/skin-blue-light.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap.css">
 
   
           <script src="plugins/jquery/jquery-2.1.4.min.js"></script>
 <script src="plugins/morris/raphael-min.js"></script>
 <script src="plugins/morris/morris.js"></script>
-  <link rel="stylesheet" href="plugins/morris/morris.css">
-  <link rel="stylesheet" href="plugins/morris/example.css">
+  <link rel="stylesheet" href="../plugins/morris/morris.css">
+  <link rel="stylesheet" href="../plugins/morris/example.css">
           <script src="plugins/jspdf/jspdf.min.js"></script>
           <script src="plugins/jspdf/jspdf.plugin.autotable.js"></script>
           
@@ -52,7 +51,7 @@ if (!isset($_SESSION['administrador'])) {
         </div>
 
         
-        <nav class="navbar navbar-static-top" role="navigation" style="height: 50px;">
+        <nav class="navbar navbar-static-top" role="navigation" style="height: 8%;">
          
           <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only"></span>
@@ -66,7 +65,7 @@ if (!isset($_SESSION['administrador'])) {
                
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 
-                  <span class="">Administrador <b class="caret"></b> </span>
+                  <span class="">Administrador  </span>
 
                 </a>
                 <ul class="dropdown-menu">
@@ -104,31 +103,35 @@ if (!isset($_SESSION['administrador'])) {
           </div>
           -->
           <!-- Sidebar Menu -->
-          <ul class="sidebar-menu">
+          <ul class="sidebar-menu" style="width: 150px;">
             <li class="header">ADMINISTRACION</li>
                                     <li><i class="fa fa-home"></i> <span><a href="home_admin.php" style="text-decoration: none;"> Inicio</a></span></li>
                                     <br>
-            <li><i class="fa fa-shopping-cart"></i> <span ><a href="ver_ventas.php" style="text-decoration: none;">Ventas</a></span></li>
+           <li><i class="fa fa-shopping-cart"></i> <span><a href="ver_ventas.php" style="text-decoration: none;"> Ventas</a></span></li>
             
             <br>
             
-            <li><i class="fa fa-glass"></i> <span><a href="ver_productos.php" style="text-decoration: none;"> Productos</span></a></li>
+            <li><i class="fa fa-glass"></i> <span><a href="ver_productos.php" style="text-decoration: none;"> Productos</a></span></li>
             <br>
-            
+            <li class="treeview">
+              <i class="fa fa-database"></i> <span><a href="gestionar_usuarios.php" style="text-decoration: none;">Usuarios</a></span> 
+             
+            </li>
 
-            
+            <br>
 
-          
-           
-                        <li class="treeview">
-              <i class="fa fa-file-text-o"></i> <span>Reportes</span>
+            <li >
+             <i class="fa fa-area-chart"></i> <span>Inventario</span>
               
             </li>
             <br>
+                       
+         
+          
 
 
             <li class="treeview">
-              <i class="fa fa-cog"></i> <span><a href="../includes/cerrar_sesion.php" style="text-decoration: none;"> Cerrar sesion</span></a>
+               <i class="fa fa-cog"></i> <span><a href="../includes/cerrar_sesion.php" style="text-decoration: none;"> Cerrar sesion</span></a>
               
             </li>
           
@@ -142,94 +145,108 @@ if (!isset($_SESSION['administrador'])) {
       <div class="content">
         	<div class="row">
 	<div class="col-md-12">
-		<h1>Bienvenido a Sistema de Gestion </h1>
+		<h1>Ver Clientes</h1>
+    <div class="btn-group  pull-right">
+  <a href="agregar_usuario.php" class="btn btn-default">Agregar Usuario</a>
+</div>
+
+
 </div>
 </div>
+
   <div class="row">
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3><?php $sql="SELECT count(*) AS total_productos from producto";
-                
-                $query=$conexion->query($sql);
-                $row=$query->fetch_assoc();
-                echo $row['total_productos'];
-
-               ?></h3>
-
-              <p>Productos</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <a href="ver_productos.php" class="small-box-footer">Ver mas <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
+          
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-purple">
-            <div class="inner">
-              <h3><?php 
-              $sql="SELECT count(*) as total_clientes from usuarios inner join perfiles_usuario on usuarios.Id_perfil=perfiles_usuario.Id_perfil where Nombre_perfil='cliente' ";
-              $query=$conexion->query($sql);
-              $row=$query->fetch_assoc();
-              echo $row['total_clientes'];
-               ?></h3>
-
-              <p>Clientes</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="ver_clientes.php" class="small-box-footer">Ver mas <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
+          
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3><?php $sql="SELECT count(*) AS total_proveedores from proveedor";
-                
-                $query=$conexion->query($sql);
-                $row=$query->fetch_assoc();
-                echo $row['total_proveedores'];
-
-               ?></h3>
-
-              <p>Proveedores</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a href="ver_proveedores.php" class="small-box-footer">Ver mas <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
+       
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3><?php $sql="SELECT count(*) as total_usuarios from Usuarios";
-               $query=$conexion->query($sql);
-               $row=$query->fetch_assoc();
-               echo $row['total_usuarios']; ?></h3>
-
-              <p>Usuarios</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="gestionar_usuarios.php" class="small-box-footer">Ver mas <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
+       
         <!-- ./col -->
       </div>
       <!-- /.row -->
 
+<div class="row">
+  
+	
+<div class="clearfix"></div>
+<div class="table-responsive">
+<br><table class="table table-hover table-bordered">
+	<thead>
+		<tr><th>Id</th>
+		<th>Primer Nombre </th>
+		<th>Segundo Nombre</th>
+		<th>Primer Apellido</th>
+    <th>Segundo Apellido</th>
+    <th>Usuario</th>
+    <th>Tipo de cedula</th>
+    <th>Cedula</th>
+    <th>Estado</th>
+    <th>Municipio</th>
+    <th>Parroquia</th>
+    <th>Ciudad</th>
+    <th>Correo electronico</th>
+    <th>telefono</th>
+    <th>Estatus</th>
+    <th>Perfil</th>
 
+	</tr></thead>
+  <tbody>
+    <?php $sql="SELECT * FROM usuarios INNER JOIN estados on usuarios.id_estado=estados.id_estado  INNER JOIN municipios ON usuarios.id_municipio=municipios.id_municipio INNER JOIN parroquias ON usuarios.id_parroquia=parroquias.id_parroquia INNER JOIN ciudades ON usuarios.id_ciudad=ciudades.id_ciudad INNER JOIN status_b ON usuarios.id_status_B=status_b.id_status_B INNER JOIN perfiles_usuario ON usuarios.Id_perfil=perfiles_usuario.Id_perfil where Nombre_perfil='cliente' order by Id_usuario";
+      $query=$conexion->query($sql);
+
+      while ($row=$query->fetch_assoc()) {
+        
+      
+
+        ?>
+    <tr><th><?php echo $row['Id_usuario']; ?></th>
+    <td><?php echo $row['Primer_nombre']; ?> </td>
+    <td><?php echo $row['Segundo_Nombre']; ?></td>
+    <td><?php echo $row['Primer_apellido']; ?></td>
+    <td><?php echo $row['Segundo_Apellido']; ?></td>
+    <td><?php echo $row['Usuario']; ?></td>
+    <td><?php echo $row['Tipo_C']; ?></td>
+    <td><?php echo $row['Cedula']; ?></td>
+    <td><?php echo $row['estado']; ?></td>
+
+    <td><?php echo $row['municipio']; ?></td>
+    <td><?php echo $row['parroquia'] ?></td>
+    <td><?php echo $row['ciudad'] ?></td>
+    <td><?php echo $row['email'] ?></td>
+    <td><?php echo $row['telefono'] ?></td>
+    <td><?php echo $row['Nombre_status_B'] ?></td>
+    <td><?php echo $row['Nombre_perfil'] ?></td>
+    <td style="width:70px;">
+    <a href="editar_usuario.php?id=<?php echo $row['Id_usuario']; ?>" class="btn btn-warning">Actualizar</a></td>
+    
+    <td>
+    <a href="../includes/eliminar_usuario.php?id=<?php echo $row['Id_usuario']; ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+    </td>
+
+    <?php } ?>
+    
+
+  </tr>
+
+
+ 
+  </tbody>
+
+		</table>
+  </div>
+  
+
+<div class="clearfix"></div>
+
+	<br><br><br><br><br><br><br><br><br><br>
+	</div>
 </div>        </div>
       </div><!-- /.content-wrapper -->
 
