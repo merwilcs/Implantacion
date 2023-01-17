@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-11-2022 a las 11:12:21
+-- Tiempo de generación: 23-01-2023 a las 01:54:16
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.3.1
 
@@ -68,31 +68,6 @@ INSERT INTO `banco` (`Id_Banco`, `Nombre_Banco`) VALUES
 (28, 'BANCO DE COMERCIO EXTERIOR, C.A. (BANCOEX)'),
 (29, 'MI BANCO, BANCO MICROFINANCIERO, C.A.'),
 (30, 'BANCRECER, S.A. BANCO MICROFINANCIERO');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `carrito_usuarios`
---
-
-CREATE TABLE `carrito_usuarios` (
-  `id_sesion` varchar(255) NOT NULL,
-  `id_producto` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `carrito_usuarios`
---
-
-INSERT INTO `carrito_usuarios` (`id_sesion`, `id_producto`) VALUES
-('marn9eds761djtqnej9aff68e6', 1),
-('', 3),
-('', 1),
-('', 2),
-('marn9eds761djtqnej9aff68e6', 6),
-('marn9eds761djtqnej9aff68e6', 2),
-('hu0bqtuuds4035tnlerl01ivsk', 1),
-('hu0bqtuuds4035tnlerl01ivsk', 2);
 
 -- --------------------------------------------------------
 
@@ -674,15 +649,15 @@ INSERT INTO `estados` (`id_estado`, `estado`, `iso_3166-2`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `historial`
+-- Estructura de tabla para la tabla `inventario`
 --
 
-CREATE TABLE `historial` (
-  `Id_historial` int(11) NOT NULL,
-  `Id_pedido` int(11) NOT NULL,
+CREATE TABLE `inventario` (
+  `Id_inventario` int(11) NOT NULL,
   `Id_producto` int(11) NOT NULL,
-  `cantidad_de_ventas` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `cantidad_inicial` int(100) NOT NULL,
+  `cantidad_total` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2196,30 +2171,6 @@ INSERT INTO `parroquias` (`id_parroquia`, `id_municipio`, `parroquia`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pedido`
---
-
-CREATE TABLE `pedido` (
-  `Id_pedido` int(30) NOT NULL,
-  `Id_usuario` int(30) NOT NULL,
-  `Id_producto` int(30) NOT NULL,
-  `Id_tipo_pago` int(30) NOT NULL,
-  `cantidad_del_producto` int(30) NOT NULL,
-  `fecha_solicitud` date NOT NULL,
-  `Numero_envio` int(30) NOT NULL,
-  `status` varchar(75) CHARACTER SET latin1 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `pedido`
---
-
-INSERT INTO `pedido` (`Id_pedido`, `Id_usuario`, `Id_producto`, `Id_tipo_pago`, `cantidad_del_producto`, `fecha_solicitud`, `Numero_envio`, `status`) VALUES
-(1, 1, 1, 1, 1, '0000-00-00', 1, '1');
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `perfiles_usuario`
 --
 
@@ -2251,8 +2202,9 @@ CREATE TABLE `producto` (
   `codigo_producto` int(70) NOT NULL,
   `imagen_producto` varchar(255) CHARACTER SET latin1 NOT NULL,
   `Nombre_producto` varchar(70) CHARACTER SET latin1 NOT NULL,
-  `Descripcion_producto` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `Descripcion_producto` varchar(100) NOT NULL,
   `Precio` int(11) NOT NULL,
+  `Precio_dolares` int(11) NOT NULL,
   `cantidad_total` int(11) NOT NULL,
   `cantidad_inicial` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -2261,13 +2213,13 @@ CREATE TABLE `producto` (
 -- Volcado de datos para la tabla `producto`
 --
 
-INSERT INTO `producto` (`Id_producto`, `codigo_producto`, `imagen_producto`, `Nombre_producto`, `Descripcion_producto`, `Precio`, `cantidad_total`, `cantidad_inicial`) VALUES
-(1, 0, '', 'victor', 'tecnologia', 100, 10, 50),
-(2, 101010, '', 'saul', 'saul', 100, 100, 150),
-(3, 101010, '', 'saul', 'saul', 100, 100, 150),
-(4, 0, '', '', '', 0, 0, 0),
-(5, 1111, '', '1111', '111', 111, 111, 11),
-(6, 11111, 'Harina PAN', '1era foto.jpeg', 'harina pan', 10, 100, 120);
+INSERT INTO `producto` (`Id_producto`, `codigo_producto`, `imagen_producto`, `Nombre_producto`, `Descripcion_producto`, `Precio`, `Precio_dolares`, `cantidad_total`, `cantidad_inicial`) VALUES
+(1, 0, 'WhatsApp Image 2022-12-08 at 10.45.30 AM.jpeg', 'Libreta', '0', 100, 0, -20, 0),
+(2, 101010, 'WhatsApp Image 2022-12-08 at 11.06.53 AM.jpeg', 'saul', '0', 100, 0, -4, 0),
+(14, 312939, 'WhatsApp Image 2022-12-08 at 10.43.58 AM.jpeg', 'Craftword gold', 'lapicero', 30, 19, 4, 200),
+(15, 323676987, 'WhatsApp Image 2022-12-08 at 10.44.35 AM.jpeg', 'Crayola', 'crayola', 47, 18, 71, 90),
+(16, 875487584, 'WhatsApp Image 2022-12-08 at 10.44.20 AM.jpeg', 'Ohuhu marcadores', 'ohuhu 48 marcadores doble punta', 65, 11, 92196, 9894),
+(17, 1101, 'WhatsApp Image 2022-12-08 at 10.45.13 AM.jpeg', 'Stabilo Boss', 'stabilo boss pastel amarillo ', 4, 10, -80, 15);
 
 -- --------------------------------------------------------
 
@@ -2285,6 +2237,13 @@ CREATE TABLE `proveedor` (
   `Id_parroquia` int(30) NOT NULL,
   `Id_ciudad` int(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `proveedor`
+--
+
+INSERT INTO `proveedor` (`Id_Proveedor`, `Nombre_proveedor`, `Cantidad`, `Id_producto`, `Id_estado`, `Id_municipio`, `Id_parroquia`, `Id_ciudad`) VALUES
+(1, 'Libreta', 100, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2373,7 +2332,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`Id_usuario`, `Imagen_usuario`, `Primer_nombre`, `Segundo_Nombre`, `Primer_apellido`, `Segundo_Apellido`, `Usuario`, `Password`, `Tipo_C`, `Cedula`, `Direccion`, `id_estado`, `id_municipio`, `id_parroquia`, `id_ciudad`, `genero`, `email`, `telefono`, `Id_status_B`, `Id_perfil`, `fecha`) VALUES
-(1, '', 'victor', 'manuel', 'camacaro', 'alvarez', 'admin', 'ffc150a160d37e92012c196b6af4160d', 'V', '2345678', 'carora', 2, 5, 1, 15, 'M', 'victorcamacaro253@gmail.com', '12345678', 1, 1, '2022-11-20 14:17:16.988924'),
+(1, '', 'victor', 'manuel', 'camacaro', 'alvarez', 'victormanuel', 'ffc150a160d37e92012c196b6af4160d', 'V', '2345678', 'carora', 12, 151, 494, 215, 'M', 'victorcamacaro253@gmail.com', '12345678', 1, 1, '2023-01-13 14:48:28.391219'),
 (2, '', 'victor', 'manuel', 'camacaro', 'alvarez', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'V', '2345678', 'carora', 15, 4, 7, 4, 'M', 'victorcamacaro253@gmail.com', '12345678', 1, 1, '2022-11-12 06:40:02.328903'),
 (3, '', 'victor', 'manuel', 'camacaro', 'alvarez', 'admin', '25d55ad283aa400af464c76d713c07ad', 'V', '2345678', 'carora', 3, 2, 3, 8, 'M', 'victorcamacaro253@gmail.com', '12345678', 1, 1, '2022-11-12 06:40:02.398903'),
 (4, '', 'victor', 'manuel', 'camacaro', 'alvarez', 'admin', 'fcea920f7412b5da7be0cf42b8c93759', 'V', '2345678', 'carora', 2, 3, 2, 4, 'M', 'victorcamacaro253@gmail.com', '12345678', 1, 1, '2022-11-12 06:40:02.458903'),
@@ -2383,13 +2342,53 @@ INSERT INTO `usuarios` (`Id_usuario`, `Imagen_usuario`, `Primer_nombre`, `Segund
 (8, '', 'maria', 'jose', 'alvarez', 'ordaz', 'contador', '2c568fd1dcd24b9766888693d71af519', 'V', '12345678', 'carora', 3, 2, 5, 6, 'F', 'mariaordaz@gmail.com', '123456789', 1, 5, '2022-11-12 06:40:02.730907'),
 (9, '', 'marina', 'de los angeles', 'chirinos', 'alvarez', 'almacenista', '09f366baa41df9a797b3a0e0e58e488b', 'V', '123456789', 'carora', 1, 1, 1, 1, 'F', 'marinachirinos@gmail.com', '123456789', 1, 6, '2022-11-12 06:40:02.790907'),
 (10, '', 'marcos', 'antonio', 'perez', 'jimenez', 'marcos', 'c5e3539121c4944f2bbe097b425ee774', 'V', '12345678', 'carora', 2, 5, 4, 3, 'M', 'marcos@gmail.com', '123456789', 1, 2, '2022-11-12 06:40:02.870907'),
-(11, '', 'ana', '', 'perez', 'almao', 'ana', '276b6c4692e78d4799c12ada515bc3e4', 'V', '1234567', 'carora', 2, 4, 5, 6, 'M', 'anaroxazambrano@gmail.com', '12345678', 1, 2, '2022-11-20 14:15:31.701364'),
 (23, 'HS06.PNG', 'Victoria', 'jose', 'ortiz', 'acosta', 'victoria', 'e0e34c5ad05aac3eef6ab31eacbf7a5c', 'V', '1234567', 'carora', 12, 146, 465, 212, 'F', 'victora@gmail.com', '1234567', 1, 2, '2022-11-19 14:00:48.232138'),
-(24, 'IMG_20220818_115805.jpg', 'victor', 'manuel', 'camacaro', 'alvarez', 'victor', 'ffc150a160d37e92012c196b6af4160d', 'V', '27119364', 'carora', 12, 151, 494, 212, 'M', 'victor_16alvarez@hotmail.com', '1234567', 1, 2, '2022-11-19 14:00:48.247738'),
-(30, '', 'nombre1', '2nombre', '1apellido', '2apellido', 'nombreapellido', '7a675883b1c117e267470dce52eba518', 'V', '12343568790', 'carora', 12, 146, 463, 212, 'F', 'jsdfjdnsjn', '123456789', 1, 2, '2022-11-19 14:00:48.356938'),
+(24, 'IMG_20220818_115805.jpg', 'victor', 'manuel', 'camacaro', 'alvarez', 'victor', 'ffc150a160d37e92012c196b6af4160d', 'V', '27119364', 'carora', 12, 151, 494, 215, 'M', 'victor_16alvarez@hotmail.com', '1234567', 1, 2, '2023-01-13 15:12:29.701116'),
 (31, 'SDC11461.JPG', 'oswaldo', 'no se', 'anzola', 'no se', 'oswaldo', '633d2c523d43600cca8b0d1d8bb795b0', 'V', '12345678', 'carora', 12, 146, 463, 212, 'M', 'oswaldo@gmail.com', '1234567', 1, 2, '2022-11-19 13:58:26.587330'),
-(50, '', 'a', 'a', 'a', 'a', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'V', '111111', 'carora', 1, 4, 4, 3, 'M', 'elpikitiki4@gmail.com', '12345678', 1, 2, '2022-11-29 15:50:09.107632'),
-(72, '', 'victor', 'maduro', 'cilia', 'diosdado', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'V', '12345678', 'carora', 12, 144, 15, 12, 'M', 'anaroxazambrano@gmail.com', '12345678', 1, 2, '2022-11-29 16:27:32.555831');
+(77, 'SDC11457.JPG', 'Ana', 'maria', 'Lorena', 'contreras', 'ana', '62a90ccff3fd73694bf6281bb234b09a', 'V', '198654454', 'barquisimteo', 12, 146, 465, 212, 'Masculino', 'kamfksdam@gmail.com', '1234567', 1, 5, '2022-12-01 18:48:39.006104'),
+(79, 'gerencia de la informatica.png', 'lionel', 'andres', 'messi', '*', 'messi', '1463ccd2104eeb36769180b8a0c86bb6', 'V', '12345678', 'argentina', 12, 151, 494, 215, 'Masculino', 'messi@gmail.com', '1234567', 1, 2, '2022-12-05 23:46:42.676301'),
+(88, 'PHP.jpeg', 'katherine ', 'alejandra', 'alvarado', 'mogollon', 'alejandra', 'd5cca9df47002e1f69e355be5a307497', 'V', '30123456', 'carora', 12, 151, 494, 215, 'Femenino', 'aleja01.com', '1234567', 1, 5, '2023-01-20 12:13:36.675230'),
+(89, '', 'luis', 'andres', 'miguel', 'lopez', 'luis', '9eb0c9605dc81a68731f61b3e0838937', 'V', '1234567', 'la greda', 12, 151, 494, 215, 'M', 'victorcamacaro253@gmail.com', '987654321', 1, 2, '2023-01-13 09:07:25.809191');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ventas`
+--
+
+CREATE TABLE `ventas` (
+  `Id_venta` int(11) NOT NULL,
+  `Id_producto` int(11) NOT NULL,
+  `Numero_factura` int(250) NOT NULL,
+  `Nombre_producto` varchar(250) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `Precio` int(11) NOT NULL,
+  `Precio_dolares` int(11) NOT NULL,
+  `Id_usuario` int(11) NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `ventas`
+--
+
+INSERT INTO `ventas` (`Id_venta`, `Id_producto`, `Numero_factura`, `Nombre_producto`, `cantidad`, `Precio`, `Precio_dolares`, `Id_usuario`, `fecha`) VALUES
+(1, 16, 1, 'Ohuhu marcadores', 10, 65, 11, 24, '2023-01-12 18:03:01'),
+(2, 16, 1, 'Ohuhu marcadores', 3, 65, 11, 24, '2023-01-12 18:03:42'),
+(3, 16, 1, 'Ohuhu marcadores', 5, 65, 11, 24, '2023-01-12 18:07:05'),
+(4, 2, 1656398468, 'saul', 1, 100, 0, 24, '2023-01-12 18:18:55'),
+(5, 15, 1656398468, 'Crayola', 1, 47, 18, 24, '2023-01-12 18:25:14'),
+(6, 16, 73, 'Ohuhu marcadores', 1, 65, 11, 24, '2023-01-12 18:51:09'),
+(7, 14, 29, 'Craftword gold', 1, 30, 19, 24, '2023-01-12 18:51:40'),
+(8, 16, 723, 'Ohuhu marcadores', 10, 65, 11, 24, '2023-01-12 18:52:38'),
+(9, 16, 857, 'Ohuhu marcadores', 2, 65, 11, 24, '2023-01-12 18:53:22'),
+(10, 16, 9, 'Ohuhu marcadores', 1, 65, 11, 24, '2023-01-12 19:29:55'),
+(11, 14, 441, 'Craftword gold', 3, 30, 19, 24, '2023-01-12 19:32:00'),
+(12, 17, 915, 'Stabilo Boss', 1, 4, 10, 24, '2023-01-13 21:48:54'),
+(13, 16, 312, 'Ohuhu marcadores', 1, 65, 11, 24, '2023-01-14 00:09:09'),
+(14, 17, 312, 'Stabilo Boss', 1, 4, 10, 24, '2023-01-14 00:09:09'),
+(15, 16, 874, 'Ohuhu marcadores', 1, 65, 11, 24, '2023-01-14 01:49:04'),
+(16, 16, 592, 'Ohuhu marcadores', 1, 65, 11, 24, '2023-01-22 21:52:23');
 
 --
 -- Índices para tablas volcadas
@@ -2400,12 +2399,6 @@ INSERT INTO `usuarios` (`Id_usuario`, `Imagen_usuario`, `Primer_nombre`, `Segund
 --
 ALTER TABLE `banco`
   ADD PRIMARY KEY (`Id_Banco`);
-
---
--- Indices de la tabla `carrito_usuarios`
---
-ALTER TABLE `carrito_usuarios`
-  ADD KEY `id_producto` (`id_producto`);
 
 --
 -- Indices de la tabla `ciudades`
@@ -2431,12 +2424,11 @@ ALTER TABLE `estados`
   ADD PRIMARY KEY (`id_estado`);
 
 --
--- Indices de la tabla `historial`
+-- Indices de la tabla `inventario`
 --
-ALTER TABLE `historial`
-  ADD PRIMARY KEY (`Id_historial`),
-  ADD KEY `historial_pedido_1` (`Id_pedido`),
-  ADD KEY `historial_pedido_2` (`Id_producto`);
+ALTER TABLE `inventario`
+  ADD PRIMARY KEY (`Id_inventario`),
+  ADD KEY `id_producto_fk` (`Id_producto`);
 
 --
 -- Indices de la tabla `municipios`
@@ -2451,15 +2443,6 @@ ALTER TABLE `municipios`
 ALTER TABLE `parroquias`
   ADD PRIMARY KEY (`id_parroquia`),
   ADD KEY `id_municipio` (`id_municipio`);
-
---
--- Indices de la tabla `pedido`
---
-ALTER TABLE `pedido`
-  ADD PRIMARY KEY (`Id_pedido`),
-  ADD KEY `pedido_ibfk_1` (`Id_producto`),
-  ADD KEY `pedido_ibfk_2` (`Id_tipo_pago`),
-  ADD KEY `pedido_ibfk_3` (`Id_usuario`);
 
 --
 -- Indices de la tabla `perfiles_usuario`
@@ -2516,6 +2499,14 @@ ALTER TABLE `usuarios`
   ADD KEY `usuarios_ciudad` (`id_ciudad`);
 
 --
+-- Indices de la tabla `ventas`
+--
+ALTER TABLE `ventas`
+  ADD PRIMARY KEY (`Id_venta`),
+  ADD KEY `id_producto_fk` (`Id_producto`),
+  ADD KEY `id_usuario_fk` (`Id_usuario`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -2544,10 +2535,10 @@ ALTER TABLE `estados`
   MODIFY `id_estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT de la tabla `historial`
+-- AUTO_INCREMENT de la tabla `inventario`
 --
-ALTER TABLE `historial`
-  MODIFY `Id_historial` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `inventario`
+  MODIFY `Id_inventario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `municipios`
@@ -2571,13 +2562,13 @@ ALTER TABLE `perfiles_usuario`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `Id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-  MODIFY `Id_Proveedor` int(30) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_Proveedor` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `status_b`
@@ -2595,17 +2586,17 @@ ALTER TABLE `tipo_pago`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `Id_usuario` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `Id_usuario` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+
+--
+-- AUTO_INCREMENT de la tabla `ventas`
+--
+ALTER TABLE `ventas`
+  MODIFY `Id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `carrito_usuarios`
---
-ALTER TABLE `carrito_usuarios`
-  ADD CONSTRAINT `carrito_usuarios_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`Id_producto`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `ciudades`
@@ -2623,13 +2614,6 @@ ALTER TABLE `empresa`
   ADD CONSTRAINT `empresa_ibfk_4` FOREIGN KEY (`Id_ciudad`) REFERENCES `ciudades` (`id_ciudad`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `historial`
---
-ALTER TABLE `historial`
-  ADD CONSTRAINT `historial_pedido_1` FOREIGN KEY (`Id_pedido`) REFERENCES `pedido` (`Id_pedido`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `historial_pedido_2` FOREIGN KEY (`Id_producto`) REFERENCES `producto` (`Id_producto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
 -- Filtros para la tabla `municipios`
 --
 ALTER TABLE `municipios`
@@ -2640,14 +2624,6 @@ ALTER TABLE `municipios`
 --
 ALTER TABLE `parroquias`
   ADD CONSTRAINT `parroquias_ibfk_1` FOREIGN KEY (`id_municipio`) REFERENCES `municipios` (`id_municipio`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `pedido`
---
-ALTER TABLE `pedido`
-  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`Id_producto`) REFERENCES `producto` (`Id_producto`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`Id_tipo_pago`) REFERENCES `tipo_pago` (`Id_tipo_pago`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `pedido_ibfk_3` FOREIGN KEY (`Id_usuario`) REFERENCES `usuarios` (`Id_usuario`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `proveedor`
@@ -2676,6 +2652,13 @@ ALTER TABLE `usuarios`
   ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`Id_status_B`) REFERENCES `status_b` (`Id_status_B`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `usuarios_ibfk_2` FOREIGN KEY (`Id_perfil`) REFERENCES `perfiles_usuario` (`Id_perfil`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `usuarios_parroquia` FOREIGN KEY (`id_parroquia`) REFERENCES `parroquias` (`id_parroquia`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `ventas`
+--
+ALTER TABLE `ventas`
+  ADD CONSTRAINT `id_producto_fk` FOREIGN KEY (`Id_producto`) REFERENCES `producto` (`Id_producto`),
+  ADD CONSTRAINT `id_usuario_fk` FOREIGN KEY (`Id_usuario`) REFERENCES `usuarios` (`Id_usuario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
