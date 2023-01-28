@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-01-2023 a las 01:54:16
+-- Tiempo de generación: 28-01-2023 a las 18:09:47
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.3.1
 
@@ -595,6 +595,7 @@ INSERT INTO `ciudades` (`id_ciudad`, `id_estado`, `ciudad`, `capital`) VALUES
 CREATE TABLE `empresa` (
   `Id_empresa` int(30) NOT NULL,
   `Nombre_empresa` varchar(70) CHARACTER SET latin1 NOT NULL,
+  `Direccion` varchar(200) NOT NULL,
   `Id_estado` int(30) NOT NULL,
   `Id_municipio` int(30) NOT NULL,
   `Id_parroquia` int(30) NOT NULL,
@@ -602,6 +603,13 @@ CREATE TABLE `empresa` (
   `Rif` varchar(70) CHARACTER SET latin1 NOT NULL,
   `Telefono` varchar(70) CHARACTER SET latin1 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `empresa`
+--
+
+INSERT INTO `empresa` (`Id_empresa`, `Nombre_empresa`, `Direccion`, `Id_estado`, `Id_municipio`, `Id_parroquia`, `Id_ciudad`, `Rif`, `Telefono`) VALUES
+(4, 'Tina', 'AV ENTRE CALLES 27 Y 28 LOCAL NRO 27-101 SECTOR CENTRO BARQUISIMETO LARA POSTAL 3001', 12, 12, 465, 212, '0004563556', '04261234567');
 
 -- --------------------------------------------------------
 
@@ -645,19 +653,6 @@ INSERT INTO `estados` (`id_estado`, `estado`, `iso_3166-2`) VALUES
 (23, 'Zulia', 'VE-V'),
 (24, 'Distrito Capital', 'VE-A'),
 (25, 'Dependencias Federales', 'VE-Z');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `inventario`
---
-
-CREATE TABLE `inventario` (
-  `Id_inventario` int(11) NOT NULL,
-  `Id_producto` int(11) NOT NULL,
-  `cantidad_inicial` int(100) NOT NULL,
-  `cantidad_total` int(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2214,12 +2209,13 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`Id_producto`, `codigo_producto`, `imagen_producto`, `Nombre_producto`, `Descripcion_producto`, `Precio`, `Precio_dolares`, `cantidad_total`, `cantidad_inicial`) VALUES
-(1, 0, 'WhatsApp Image 2022-12-08 at 10.45.30 AM.jpeg', 'Libreta', '0', 100, 0, -20, 0),
-(2, 101010, 'WhatsApp Image 2022-12-08 at 11.06.53 AM.jpeg', 'saul', '0', 100, 0, -4, 0),
+(1, 0, 'WhatsApp Image 2022-12-08 at 10.45.30 AM.jpeg', 'Libreta', '0', 100, 0, 20, 0),
+(2, 101010, 'WhatsApp Image 2022-12-08 at 11.06.53 AM.jpeg', 'saul', '0', 100, 0, 4, 0),
 (14, 312939, 'WhatsApp Image 2022-12-08 at 10.43.58 AM.jpeg', 'Craftword gold', 'lapicero', 30, 19, 4, 200),
 (15, 323676987, 'WhatsApp Image 2022-12-08 at 10.44.35 AM.jpeg', 'Crayola', 'crayola', 47, 18, 71, 90),
-(16, 875487584, 'WhatsApp Image 2022-12-08 at 10.44.20 AM.jpeg', 'Ohuhu marcadores', 'ohuhu 48 marcadores doble punta', 65, 11, 92196, 9894),
-(17, 1101, 'WhatsApp Image 2022-12-08 at 10.45.13 AM.jpeg', 'Stabilo Boss', 'stabilo boss pastel amarillo ', 4, 10, -80, 15);
+(16, 875487584, 'WhatsApp Image 2022-12-08 at 10.44.20 AM.jpeg', 'Ohuhu marcadores', 'ohuhu 48 marcadores doble punta', 65, 11, 92195, 9894),
+(17, 1101, 'WhatsApp Image 2022-12-08 at 10.45.13 AM.jpeg', 'Stabilo Boss', 'stabilo boss pastel amarillo ', 4, 10, -83, 15),
+(18, 0, 'banner.jpg', 'market', 'es una marcador para universitario', 100, 50, 100, 50);
 
 -- --------------------------------------------------------
 
@@ -2334,8 +2330,6 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`Id_usuario`, `Imagen_usuario`, `Primer_nombre`, `Segundo_Nombre`, `Primer_apellido`, `Segundo_Apellido`, `Usuario`, `Password`, `Tipo_C`, `Cedula`, `Direccion`, `id_estado`, `id_municipio`, `id_parroquia`, `id_ciudad`, `genero`, `email`, `telefono`, `Id_status_B`, `Id_perfil`, `fecha`) VALUES
 (1, '', 'victor', 'manuel', 'camacaro', 'alvarez', 'victormanuel', 'ffc150a160d37e92012c196b6af4160d', 'V', '2345678', 'carora', 12, 151, 494, 215, 'M', 'victorcamacaro253@gmail.com', '12345678', 1, 1, '2023-01-13 14:48:28.391219'),
 (2, '', 'victor', 'manuel', 'camacaro', 'alvarez', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'V', '2345678', 'carora', 15, 4, 7, 4, 'M', 'victorcamacaro253@gmail.com', '12345678', 1, 1, '2022-11-12 06:40:02.328903'),
-(3, '', 'victor', 'manuel', 'camacaro', 'alvarez', 'admin', '25d55ad283aa400af464c76d713c07ad', 'V', '2345678', 'carora', 3, 2, 3, 8, 'M', 'victorcamacaro253@gmail.com', '12345678', 1, 1, '2022-11-12 06:40:02.398903'),
-(4, '', 'victor', 'manuel', 'camacaro', 'alvarez', 'admin', 'fcea920f7412b5da7be0cf42b8c93759', 'V', '2345678', 'carora', 2, 3, 2, 4, 'M', 'victorcamacaro253@gmail.com', '12345678', 1, 1, '2022-11-12 06:40:02.458903'),
 (5, '', 'jesus', 'andres', 'farias', 'aguilar', 'jesus', 'b44a73579541f020934a458277b470cb', 'V', '27119364', 'carora', 2, 4, 3, 5, 'M', 'victora@gmail.com', '123456789', 2, 2, '2022-11-12 06:40:02.518903'),
 (6, '', 'Merwil', 'no se ', 'no se ', 'no se', 'vendedor', '0407e8c8285ab85509ac2884025dcf42', 'V', '123456789', 'carora', 6, 3, 4, 6, 'M', 'merwil@gmail.com', '123456', 1, 3, '2022-11-12 06:40:02.588904'),
 (7, '', 'juan', 'andres', 'perez', 'lopez', 'inventario', '61a892b8d073f99d98af5de82be351e7', 'V', '12456789', 'carora', 7, 3, 4, 2, 'M', 'juan@gmail.com', '12345678', 1, 4, '2022-11-12 06:40:02.633905'),
@@ -2343,7 +2337,7 @@ INSERT INTO `usuarios` (`Id_usuario`, `Imagen_usuario`, `Primer_nombre`, `Segund
 (9, '', 'marina', 'de los angeles', 'chirinos', 'alvarez', 'almacenista', '09f366baa41df9a797b3a0e0e58e488b', 'V', '123456789', 'carora', 1, 1, 1, 1, 'F', 'marinachirinos@gmail.com', '123456789', 1, 6, '2022-11-12 06:40:02.790907'),
 (10, '', 'marcos', 'antonio', 'perez', 'jimenez', 'marcos', 'c5e3539121c4944f2bbe097b425ee774', 'V', '12345678', 'carora', 2, 5, 4, 3, 'M', 'marcos@gmail.com', '123456789', 1, 2, '2022-11-12 06:40:02.870907'),
 (23, 'HS06.PNG', 'Victoria', 'jose', 'ortiz', 'acosta', 'victoria', 'e0e34c5ad05aac3eef6ab31eacbf7a5c', 'V', '1234567', 'carora', 12, 146, 465, 212, 'F', 'victora@gmail.com', '1234567', 1, 2, '2022-11-19 14:00:48.232138'),
-(24, 'IMG_20220818_115805.jpg', 'victor', 'manuel', 'camacaro', 'alvarez', 'victor', 'ffc150a160d37e92012c196b6af4160d', 'V', '27119364', 'carora', 12, 151, 494, 215, 'M', 'victor_16alvarez@hotmail.com', '1234567', 1, 2, '2023-01-13 15:12:29.701116'),
+(24, 'IMG_20220818_115805.jpg', 'victor', 'manuel', 'camacaro', 'alvarez', 'victor', 'ffc150a160d37e92012c196b6af4160d', 'V', '27119364', 'carora', 12, 151, 494, 215, 'M', 'victor_16alvarez@hotmail.com', '1234567', 1, 2, '2023-01-27 06:27:48.236968'),
 (31, 'SDC11461.JPG', 'oswaldo', 'no se', 'anzola', 'no se', 'oswaldo', '633d2c523d43600cca8b0d1d8bb795b0', 'V', '12345678', 'carora', 12, 146, 463, 212, 'M', 'oswaldo@gmail.com', '1234567', 1, 2, '2022-11-19 13:58:26.587330'),
 (77, 'SDC11457.JPG', 'Ana', 'maria', 'Lorena', 'contreras', 'ana', '62a90ccff3fd73694bf6281bb234b09a', 'V', '198654454', 'barquisimteo', 12, 146, 465, 212, 'Masculino', 'kamfksdam@gmail.com', '1234567', 1, 5, '2022-12-01 18:48:39.006104'),
 (79, 'gerencia de la informatica.png', 'lionel', 'andres', 'messi', '*', 'messi', '1463ccd2104eeb36769180b8a0c86bb6', 'V', '12345678', 'argentina', 12, 151, 494, 215, 'Masculino', 'messi@gmail.com', '1234567', 1, 2, '2022-12-05 23:46:42.676301'),
@@ -2388,7 +2382,9 @@ INSERT INTO `ventas` (`Id_venta`, `Id_producto`, `Numero_factura`, `Nombre_produ
 (13, 16, 312, 'Ohuhu marcadores', 1, 65, 11, 24, '2023-01-14 00:09:09'),
 (14, 17, 312, 'Stabilo Boss', 1, 4, 10, 24, '2023-01-14 00:09:09'),
 (15, 16, 874, 'Ohuhu marcadores', 1, 65, 11, 24, '2023-01-14 01:49:04'),
-(16, 16, 592, 'Ohuhu marcadores', 1, 65, 11, 24, '2023-01-22 21:52:23');
+(16, 16, 592, 'Ohuhu marcadores', 1, 65, 11, 24, '2023-01-22 21:52:23'),
+(17, 16, 103, 'Ohuhu marcadores', 1, 65, 11, 24, '2023-01-27 05:32:12'),
+(18, 17, 560, 'Stabilo Boss', 3, 4, 10, 24, '2023-01-27 06:11:38');
 
 --
 -- Índices para tablas volcadas
@@ -2422,13 +2418,6 @@ ALTER TABLE `empresa`
 --
 ALTER TABLE `estados`
   ADD PRIMARY KEY (`id_estado`);
-
---
--- Indices de la tabla `inventario`
---
-ALTER TABLE `inventario`
-  ADD PRIMARY KEY (`Id_inventario`),
-  ADD KEY `id_producto_fk` (`Id_producto`);
 
 --
 -- Indices de la tabla `municipios`
@@ -2526,19 +2515,13 @@ ALTER TABLE `ciudades`
 -- AUTO_INCREMENT de la tabla `empresa`
 --
 ALTER TABLE `empresa`
-  MODIFY `Id_empresa` int(30) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_empresa` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
   MODIFY `id_estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
---
--- AUTO_INCREMENT de la tabla `inventario`
---
-ALTER TABLE `inventario`
-  MODIFY `Id_inventario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `municipios`
@@ -2562,7 +2545,7 @@ ALTER TABLE `perfiles_usuario`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `Id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `Id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -2592,7 +2575,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `Id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `Id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Restricciones para tablas volcadas
